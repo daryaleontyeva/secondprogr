@@ -128,13 +128,12 @@ namespace Быстрая_сортировка
                 largeArr[i] = largeArr.Length - 1 - i;
             }
             Quicksort(largeArr, 0, largeArr.Length - 1);
-            bool isSuccess = false;
+            bool isSuccess = true;
             for (int i = 0; i < largeArr.Length - 2; i++)
             {
                 if (largeArr[i] > largeArr[i + 1])
                     isSuccess = false;
-                else
-                    isSuccess = true;
+                break;
             }
             if (isSuccess == false)
                 Console.WriteLine("! Быстрая сортировка массива из 15000 чисел произведена некорректно!");
