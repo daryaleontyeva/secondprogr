@@ -1,0 +1,145 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Быстрая_сортировка
+{
+    class Program
+    {
+        public static int Quicksort(int[] array)
+        {
+            if (array.Length > 1)
+            {
+                Quicksort(array, 0, array.Length - 1);
+                return 0;
+            }
+            else return -1;
+        }
+
+        private static void Quicksort(int[] array, int left, int right)
+        {
+            if (left == right)
+                return;
+            int i = left + 1;
+            int j = right;
+            int temp = array[left];
+            while (i < j)
+            {
+                if (array[i] <= temp) i++;
+                else if (array[j] > temp) j--;
+                else
+                {
+                    int m = array[i];
+                    array[i] = array[j];
+                    array[j] = m;
+                }
+            }
+
+            if (array[j] <= temp)
+            {
+                int m = array[left];
+                array[left] = array[right];
+                array[right] = m;
+                Quicksort(array, left, right - 1);
+            }
+            else
+            {
+                Quicksort(array, left, i - 1);
+                Quicksort(array, i, right);
+            }
+        }
+        static void Main(string[] args)
+        {
+            ThreeNumbers();
+            OneHundred();
+            Random();
+            EmptyArray();
+            LargeArray();
+            Console.ReadKey();
+        }
+        private static void ThreeNumbers() //Сортировка массива из 3 чисел
+        {   
+            int[] threeNumbers = { 42, 24, 10 };
+            Quicksort(threeNumbers, 0, threeNumbers.Length - 1);
+            if (threeNumbers[1] > threeNumbers[0] && threeNumbers[2] > threeNumbers[1])
+                Console.WriteLine("Быстрая сортировка массива из 3 чисел произведена корректно");
+            else
+                Console.WriteLine("! Быстрая сортировка массива из 3 чисел произведена некорректно!");
+        }
+        private static void OneHundred()  //Сортировка массива из 100 одинаковых чисел
+        {
+            bool same = true;
+            int[] oneHundred = new int[100];
+            for (int i = 0; i < oneHundred.Length; i++)
+            {
+                oneHundred[i] = 5;
+            }
+            Quicksort(oneHundred, 0, oneHundred.Length - 1);
+            for (int i = 0; i < oneHundred.Length; i++)
+            {
+                if (oneHundred[i] != 5)
+                    same = false;
+            }
+            if (same == false)
+                Console.WriteLine("! Быстрая сортировка массива из 100 одинаковых чисел произведена некорректно!");
+            else
+                Console.WriteLine("Быстрая сортировка массива из 100 одинаковых чисел произвелась корректно");
+        }
+        private static void Random() //Сортировка массива из 1000 случайных чисел
+        { 
+            int[] random = new int[1000];
+            for (int i = 0; i < 1000; i++)
+            {
+                var randm = new Random();
+                random[i] = randm.Next(0, 1000);
+            }
+            Quicksort(random, 0, random.Length - 1);
+            bool isSuccess = false;
+            int j = 100;
+            for (int i = 0; i < 10; i++)
+            {
+                if (random[i] <= random[j])
+                {
+                    isSuccess = true;
+                }
+                j++;
+            }
+            if (isSuccess == false)
+                Console.WriteLine("! Быстрая сортировка массива из 1000 случайных чисел произведена некорректно!");
+            else
+                Console.WriteLine("Быстрая сортировка массива из 1000 случайных чисел произведена корректно");
+        }
+        private static void EmptyArray() //Сортировка пустого массива
+        { 
+            int[] emptyArr = { };
+            if (Quicksort(emptyArr) != -1)
+                Console.WriteLine("! Быстрая сортировка пустого массива произведена некорректно!");
+            else
+                Console.WriteLine("Быстрая сортировка пустого массива произведена корректно");
+
+        }
+        private static void LargeArray() //Сортировка массива из 15000 элементов (из-за нехватки оперативной памяти)
+        {
+            int[] largeArr = new int[15000];
+            for (int i = 0; i < largeArr.Length; i++)
+            {
+                largeArr[i] = largeArr.Length - 1 - i;
+            }
+            Quicksort(largeArr, 0, largeArr.Length - 1);
+            bool isSuccess = false;
+            for (int i = 0; i < largeArr.Length - 2; i++)
+            {
+                if (largeArr[i] > largeArr[i + 1])
+                    isSuccess = false;
+                else
+                    isSuccess = true;
+            }
+            if (isSuccess == false)
+                Console.WriteLine("! Быстрая сортировка массива из 15000 чисел произведена некорректно!");
+            else
+                Console.WriteLine("Быстрая сортировка массива из 15000 чисел произведена корректно");
+        }
+    }
+}
